@@ -1,0 +1,1506 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>OmniStock | Sales Officer</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      :root {
+        --bg: #060c18;
+        --surf: #0c1525;
+        --surf2: #111e30;
+        --bdr: #1a2d46;
+        --bdr2: #203552;
+        --acc: #8b5cf6;
+        --acc2: #a78bfa;
+        --green: #10b981;
+        --blue: #3b82f6;
+        --orange: #f97316;
+        --red: #ef4444;
+        --yellow: #f59e0b;
+        --cyan: #06b6d4;
+        --txt: #e8eef7;
+        --txt2: #8ba4c0;
+        --muted: #3d5570;
+      }
+      html,
+      body {
+        height: 100%;
+        font-family: "Outfit", sans-serif;
+        background: var(--bg);
+        color: var(--txt);
+        overflow: hidden;
+      }
+      body {
+        display: flex;
+      }
+      .sidebar {
+        width: 240px;
+        height: 100vh;
+        background: var(--surf);
+        border-right: 1px solid var(--bdr);
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        transition: width 0.3s;
+        overflow: hidden;
+      }
+      .sidebar.col {
+        width: 68px;
+      }
+      .s-head {
+        padding: 20px 16px;
+        border-bottom: 1px solid var(--bdr);
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        flex-shrink: 0;
+      }
+      .logo-ic {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        border-radius: 11px;
+        background: linear-gradient(135deg, var(--acc), #7c3aed);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 17px;
+        box-shadow: 0 4px 14px rgba(139, 92, 246, 0.3);
+      }
+      .logo-txt {
+        overflow: hidden;
+        white-space: nowrap;
+      }
+      .logo-name {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.1rem;
+        font-weight: 700;
+        letter-spacing: -0.2px;
+      }
+      .logo-role {
+        font-size: 0.62rem;
+        color: var(--acc2);
+        font-weight: 600;
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+      }
+      .sidebar.col .logo-txt {
+        display: none;
+      }
+      .s-nav {
+        flex: 1;
+        padding: 12px 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+      .nl {
+        font-size: 0.6rem;
+        font-weight: 700;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        padding: 8px 9px 4px;
+        white-space: nowrap;
+      }
+      .sidebar.col .nl {
+        opacity: 0;
+        height: 20px;
+      }
+      .ni {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 9px 10px;
+        border-radius: 9px;
+        cursor: pointer;
+        color: var(--txt2);
+        font-size: 0.86rem;
+        font-weight: 500;
+        border: 1px solid transparent;
+        background: none;
+        width: 100%;
+        text-align: left;
+        transition: all 0.15s;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+      .ni:hover {
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--txt);
+      }
+      .ni.act {
+        background: rgba(139, 92, 246, 0.1);
+        color: var(--acc2);
+        border-color: rgba(139, 92, 246, 0.2);
+      }
+      .ni .ico {
+        font-size: 15px;
+        width: 20px;
+        min-width: 20px;
+        text-align: center;
+        flex-shrink: 0;
+      }
+      .ni .lbl {
+        overflow: hidden;
+      }
+      .sidebar.col .ni .lbl {
+        display: none;
+      }
+      .s-foot {
+        margin-top: auto;
+        padding: 12px 8px;
+        border-top: 1px solid var(--bdr);
+        flex-shrink: 0;
+      }
+      .u-card {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        padding: 9px 10px;
+        border-radius: 9px;
+        background: rgba(255, 255, 255, 0.03);
+      }
+      .ava {
+        width: 32px;
+        min-width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        background: linear-gradient(135deg, var(--acc), #7c3aed);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 0.75rem;
+        color: #fff;
+      }
+      .u-name {
+        font-size: 0.83rem;
+        font-weight: 600;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .u-role2 {
+        font-size: 0.67rem;
+        color: var(--acc2);
+        font-weight: 500;
+      }
+      .sidebar.col .u-info {
+        display: none;
+      }
+      .main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        height: 100vh;
+        overflow: hidden;
+      }
+      .topbar {
+        height: 56px;
+        padding: 0 24px;
+        border-bottom: 1px solid var(--bdr);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: var(--surf);
+        flex-shrink: 0;
+      }
+      .bc {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.83rem;
+        color: var(--txt2);
+      }
+      .bc .cur {
+        color: var(--txt);
+        font-weight: 600;
+      }
+      .tb-r {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .tb-date {
+        font-size: 0.75rem;
+        color: var(--muted);
+      }
+      .logout {
+        padding: 6px 14px;
+        background: rgba(239, 68, 68, 0.08);
+        border: 1px solid rgba(239, 68, 68, 0.18);
+        color: #fca5a5;
+        border-radius: 7px;
+        cursor: pointer;
+        font-family: "Outfit", sans-serif;
+        font-size: 0.8rem;
+        font-weight: 600;
+        transition: background 0.18s;
+      }
+      .logout:hover {
+        background: rgba(239, 68, 68, 0.16);
+      }
+      .tog {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: var(--surf2);
+        border: 1px solid var(--bdr2);
+        color: var(--txt2);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        transition: all 0.2s;
+        margin-right: 10px;
+      }
+      .tog:hover {
+        background: var(--bdr2);
+        color: var(--txt);
+      }
+      .content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 24px;
+      }
+      .view {
+        display: none;
+        animation: vi 0.22s ease;
+      }
+      .view.act {
+        display: block;
+      }
+      @keyframes vi {
+        from {
+          opacity: 0;
+          transform: translateY(5px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .ph {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 22px;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .pt {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.4rem;
+        font-weight: 700;
+        letter-spacing: -0.3px;
+      }
+      .sg3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        margin-bottom: 22px;
+      }
+      .sc {
+        background: var(--surf);
+        border: 1px solid var(--bdr);
+        border-radius: 14px;
+        padding: 20px;
+        position: relative;
+        overflow: hidden;
+        transition:
+          transform 0.18s,
+          border-color 0.18s;
+      }
+      .sc:hover {
+        transform: translateY(-1px);
+        border-color: var(--bdr2);
+      }
+      .sc::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+      }
+      .sc.pu::before {
+        background: linear-gradient(90deg, var(--acc), var(--acc2));
+      }
+      .sc.gr::before {
+        background: linear-gradient(90deg, var(--green), #34d399);
+      }
+      .sc.bl::before {
+        background: linear-gradient(90deg, var(--blue), var(--cyan));
+      }
+      .sc.or::before {
+        background: linear-gradient(90deg, var(--orange), #fbbf24);
+      }
+      .sc.ye::before {
+        background: linear-gradient(90deg, var(--yellow), #fbbf24);
+      }
+      .sc.sm {
+        padding: 16px 18px;
+      }
+      .si {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        margin-bottom: 14px;
+      }
+      .si.pu {
+        background: rgba(139, 92, 246, 0.1);
+      }
+      .si.gr {
+        background: rgba(16, 185, 129, 0.1);
+      }
+      .si.bl {
+        background: rgba(59, 130, 246, 0.1);
+      }
+      .si.or {
+        background: rgba(249, 115, 22, 0.1);
+      }
+      .si.ye {
+        background: rgba(245, 158, 11, 0.1);
+      }
+      .sl {
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: var(--txt2);
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        margin-bottom: 5px;
+      }
+      .sv {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.8rem;
+        font-weight: 700;
+        line-height: 1;
+      }
+      .sc.sm .sv {
+        font-size: 1.3rem;
+      }
+      .panel {
+        background: var(--surf);
+        border: 1px solid var(--bdr);
+        border-radius: 14px;
+        overflow: hidden;
+        margin-bottom: 18px;
+      }
+      .panel-h {
+        padding: 14px 20px;
+        border-bottom: 1px solid var(--bdr);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+      }
+      .panel-t {
+        font-size: 0.9rem;
+        font-weight: 700;
+      }
+      .pcnt {
+        font-size: 0.72rem;
+        background: var(--surf2);
+        color: var(--txt2);
+        padding: 2px 9px;
+        border-radius: 20px;
+        border: 1px solid var(--bdr);
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      thead tr {
+        background: rgba(255, 255, 255, 0.02);
+      }
+      th {
+        padding: 10px 16px;
+        text-align: left;
+        font-size: 0.67rem;
+        font-weight: 700;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.9px;
+        border-bottom: 1px solid var(--bdr);
+        white-space: nowrap;
+      }
+      td {
+        padding: 12px 16px;
+        font-size: 0.855rem;
+        color: var(--txt2);
+        border-bottom: 1px solid rgba(26, 45, 70, 0.5);
+      }
+      tr:last-child td {
+        border-bottom: none;
+      }
+      tbody tr:hover {
+        background: rgba(255, 255, 255, 0.02);
+      }
+      td.b {
+        color: var(--txt);
+        font-weight: 600;
+      }
+      td.mn {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 0.8rem;
+      }
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 3px 10px;
+        border-radius: 20px;
+        font-size: 0.68rem;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+      .badge .dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: currentColor;
+      }
+      .badge.ok {
+        background: rgba(16, 185, 129, 0.1);
+        color: #6ee7b7;
+        border: 1px solid rgba(16, 185, 129, 0.2);
+      }
+      .badge.low {
+        background: rgba(245, 158, 11, 0.1);
+        color: #fde68a;
+        border: 1px solid rgba(245, 158, 11, 0.2);
+      }
+      .badge.out {
+        background: rgba(239, 68, 68, 0.1);
+        color: #fca5a5;
+        border: 1px solid rgba(239, 68, 68, 0.2);
+      }
+      .btn {
+        padding: 7px 14px;
+        border-radius: 8px;
+        font-family: "Outfit", sans-serif;
+        font-size: 0.8rem;
+        font-weight: 600;
+        cursor: pointer;
+        border: 1px solid transparent;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        transition: all 0.15s;
+      }
+      .btn-p {
+        background: linear-gradient(135deg, var(--acc), #7c3aed);
+        color: #fff;
+        box-shadow: 0 3px 10px rgba(139, 92, 246, 0.2);
+      }
+      .btn-p:hover {
+        box-shadow: 0 5px 16px rgba(139, 92, 246, 0.35);
+        transform: translateY(-1px);
+      }
+      .btn-g {
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--txt2);
+        border-color: var(--bdr2);
+      }
+      .btn-g:hover {
+        background: rgba(255, 255, 255, 0.07);
+        color: var(--txt);
+      }
+      .btn-sm {
+        padding: 5px 10px;
+        font-size: 0.75rem;
+      }
+      .toolbar {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        padding: 13px 16px;
+        border-bottom: 1px solid var(--bdr);
+        flex-wrap: wrap;
+      }
+      .sw {
+        flex: 1;
+        min-width: 160px;
+        position: relative;
+      }
+      .sw .sic {
+        position: absolute;
+        left: 11px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 12px;
+        opacity: 0.4;
+      }
+      .si-in {
+        width: 100%;
+        padding: 8px 11px 8px 32px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--bdr);
+        border-radius: 8px;
+        color: var(--txt);
+        font-family: "Outfit", sans-serif;
+        font-size: 0.845rem;
+      }
+      .si-in::placeholder {
+        color: var(--muted);
+      }
+      .si-in:focus {
+        outline: none;
+        border-color: var(--acc);
+      }
+      .fsel {
+        padding: 8px 11px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--bdr);
+        border-radius: 8px;
+        color: var(--txt2);
+        font-family: "Outfit", sans-serif;
+        font-size: 0.845rem;
+      }
+      .fsel option {
+        background: var(--surf2);
+        color: var(--txt);
+      }
+      .fsel:focus {
+        outline: none;
+        border-color: var(--acc);
+      }
+      .date-in {
+        padding: 8px 11px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--bdr);
+        border-radius: 8px;
+        color: var(--txt2);
+        font-family: "Outfit", sans-serif;
+        font-size: 0.845rem;
+      }
+      .date-in:focus {
+        outline: none;
+        border-color: var(--acc);
+      }
+      .form-panel {
+        padding: 22px;
+      }
+      .fg {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+      .s2 {
+        grid-column: span 2;
+      }
+      .fi {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+      .fi label {
+        font-size: 0.68rem;
+        font-weight: 700;
+        color: var(--txt2);
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+      }
+      .fi input,
+      .fi select {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--bdr);
+        border-radius: 9px;
+        color: var(--txt);
+        font-family: "Outfit", sans-serif;
+        font-size: 0.88rem;
+        padding: 10px 13px;
+        transition: all 0.15s;
+      }
+      .fi input::placeholder {
+        color: var(--muted);
+      }
+      .fi input:focus,
+      .fi select:focus {
+        outline: none;
+        border-color: var(--acc);
+        background: rgba(139, 92, 246, 0.04);
+        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+      }
+      .fi input[readonly] {
+        opacity: 0.55;
+        cursor: not-allowed;
+        background: rgba(255, 255, 255, 0.01);
+      }
+      .fi select option {
+        background: var(--surf2);
+      }
+      .fa {
+        margin-top: 18px;
+        display: flex;
+        gap: 9px;
+        align-items: center;
+      }
+      .total-box {
+        background: rgba(139, 92, 246, 0.07);
+        border: 1px solid rgba(139, 92, 246, 0.2);
+        border-radius: 11px;
+        padding: 16px 20px;
+        margin-top: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .total-lbl {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--txt2);
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+      }
+      .total-val {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--acc2);
+      }
+      .imsg {
+        padding: 10px 13px;
+        border-radius: 9px;
+        font-size: 0.82rem;
+        font-weight: 500;
+        display: none;
+        align-items: center;
+        gap: 8px;
+        margin-top: 12px;
+      }
+      .imsg.show {
+        display: flex;
+      }
+      .imsg.ok {
+        background: rgba(16, 185, 129, 0.1);
+        border: 1px solid rgba(16, 185, 129, 0.2);
+        color: #6ee7b7;
+      }
+      .imsg.err {
+        background: rgba(239, 68, 68, 0.1);
+        border: 1px solid rgba(239, 68, 68, 0.2);
+        color: #fca5a5;
+      }
+      .pgrid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 12px;
+        padding: 18px;
+      }
+      .pc {
+        background: var(--surf2);
+        border: 1px solid var(--bdr);
+        border-radius: 11px;
+        padding: 16px;
+        transition:
+          border-color 0.18s,
+          transform 0.18s;
+      }
+      .pc:hover {
+        border-color: rgba(139, 92, 246, 0.3);
+        transform: translateY(-1px);
+      }
+      .pc.oos {
+        opacity: 0.5;
+      }
+      .pc-name {
+        font-weight: 600;
+        color: var(--txt);
+        font-size: 0.88rem;
+        margin-bottom: 4px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .pc-id {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 0.7rem;
+        color: var(--muted);
+        margin-bottom: 10px;
+      }
+      .pc-price {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: var(--acc2);
+        margin-bottom: 6px;
+      }
+      .pc-stock {
+        font-size: 0.76rem;
+        color: var(--txt2);
+      }
+      .pc-stock span {
+        font-weight: 600;
+      }
+      .pc-foot {
+        margin-top: 11px;
+        padding-top: 11px;
+        border-top: 1px solid var(--bdr);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .empty {
+        padding: 48px 20px;
+        text-align: center;
+        color: var(--muted);
+      }
+      .ei {
+        font-size: 30px;
+        margin-bottom: 10px;
+      }
+      .et {
+        font-size: 0.855rem;
+      }
+      .toast {
+        position: fixed;
+        bottom: 22px;
+        right: 22px;
+        padding: 12px 16px;
+        border-radius: 11px;
+        font-size: 0.855rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.4);
+        z-index: 9999;
+        animation: ti 0.25s ease;
+        max-width: 320px;
+      }
+      @keyframes ti {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .toast.ok {
+        background: rgba(16, 185, 129, 0.15);
+        border: 1px solid rgba(16, 185, 129, 0.3);
+        color: #6ee7b7;
+      }
+      .toast.err {
+        background: rgba(239, 68, 68, 0.15);
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        color: #fca5a5;
+      }
+      ::-webkit-scrollbar {
+        width: 4px;
+        height: 4px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--bdr2);
+        border-radius: 10px;
+      }
+      @media (max-width: 900px) {
+        .sg3 {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .fg {
+          grid-template-columns: 1fr;
+        }
+        .s2 {
+          grid-column: span 1;
+        }
+      }
+      @media (max-width: 600px) {
+        .sidebar {
+          width: 0 !important;
+        }
+        .content {
+          padding: 16px;
+        }
+        .sg3 {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sidebar" id="sb">
+      <div class="s-head">
+        <div class="logo-ic">💼</div>
+        <div class="logo-txt">
+          <div class="logo-name">OmniStock</div>
+          <div class="logo-role">Sales Officer</div>
+        </div>
+      </div>
+      <nav class="s-nav">
+        <div class="nl">Main</div>
+        <button class="ni act" onclick="sv('dashboard', this)">
+          <span class="ico">⊞</span><span class="lbl">Dashboard</span>
+        </button>
+        <div class="nl">Sales</div>
+        <button class="ni" onclick="sv('newsale', this)">
+          <span class="ico">➕</span><span class="lbl">New Sale</span>
+        </button>
+        <button class="ni" onclick="sv('history', this)">
+          <span class="ico">📋</span><span class="lbl">Sales History</span>
+        </button>
+        <div class="nl">Catalog</div>
+        <button class="ni" onclick="sv('products', this)">
+          <span class="ico">📦</span><span class="lbl">Products</span>
+        </button>
+      </nav>
+      <div class="s-foot">
+        <div class="u-card">
+          <div class="ava" id="ava">SO</div>
+          <div class="u-info">
+            <div class="u-name" id="uname">Sales Officer</div>
+            <div class="u-role2">Sales Staff</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="main">
+      <div class="topbar">
+        <div style="display: flex; align-items: center">
+          <button class="tog" id="togBtn" onclick="toggleSB()">◀</button>
+          <div class="bc">
+            OmniStock <span style="color: var(--muted); margin: 0 3px">›</span
+            ><span class="cur" id="pgTitle">Dashboard</span>
+          </div>
+        </div>
+        <div class="tb-r">
+          <div class="tb-date" id="dateEl"></div>
+          <button class="logout" onclick="logout()">⏻ Sign Out</button>
+        </div>
+      </div>
+      <div class="content">
+        <!-- DASHBOARD -->
+        <div class="view act" id="view-dashboard">
+          <div class="ph">
+            <div class="pt">Sales Overview</div>
+            <button
+              class="btn btn-p"
+              onclick="sv('newsale', document.querySelectorAll('.ni')[1])"
+            >
+              + Record Sale
+            </button>
+          </div>
+          <div class="sg3">
+            <div class="sc pu">
+              <div class="si pu">💰</div>
+              <div class="sl">Today's Revenue</div>
+              <div class="sv" id="d-trev">₹0.00</div>
+            </div>
+            <div class="sc gr">
+              <div class="si gr">🧾</div>
+              <div class="sl">Sales Today</div>
+              <div class="sv" id="d-tcnt">0</div>
+            </div>
+            <div class="sc bl">
+              <div class="si bl">📦</div>
+              <div class="sl">Products Available</div>
+              <div class="sv" id="d-pav">0</div>
+            </div>
+          </div>
+          <div class="sg3">
+            <div class="sc sm or">
+              <div class="sl">Total Revenue (All Time)</div>
+              <div class="sv" id="d-arev">₹0.00</div>
+            </div>
+            <div class="sc sm ye">
+              <div class="sl">Total Sales Records</div>
+              <div class="sv" id="d-acnt">0</div>
+            </div>
+            <div class="sc sm bl">
+              <div class="sl">Total Units Sold</div>
+              <div class="sv" id="d-aunit">0</div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-h">
+              <span class="panel-t">📋 Recent Sale Records</span
+              ><span class="pcnt" id="d-rcnt"></span>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Sale ID</th>
+                  <th>Sale Date</th>
+                  <th>Product</th>
+                  <th>Product ID</th>
+                  <th>Qty</th>
+                  <th>Total Amount</th>
+                  <th>Sold By</th>
+                </tr>
+              </thead>
+              <tbody id="d-stb"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- NEW SALE -->
+        <div class="view" id="view-newsale">
+          <div class="ph"><div class="pt">Record New Sale</div></div>
+          <div class="panel">
+            <div class="panel-h">
+              <span class="panel-t">🧾 New Sale Entry</span>
+            </div>
+            <div class="form-panel">
+              <div class="fg">
+                <div class="fi s2">
+                  <label>Product</label
+                  ><select id="f-prod" onchange="onPC()">
+                    <option value="">— Select a product —</option>
+                  </select>
+                </div>
+                <div class="fi">
+                  <label>Quantity</label
+                  ><input
+                    type="number"
+                    id="f-qty"
+                    placeholder="0"
+                    min="1"
+                    oninput="updTotal()"
+                  />
+                </div>
+                <div class="fi">
+                  <label>Unit Price (₹) — Auto-filled</label
+                  ><input
+                    id="f-price"
+                    readonly
+                    placeholder="Select a product first"
+                  />
+                </div>
+                <div class="fi">
+                  <label>Sale Date</label><input type="date" id="f-date" />
+                </div>
+                <div class="fi">
+                  <label>Stock Available</label
+                  ><input id="f-stk" readonly placeholder="—" />
+                </div>
+              </div>
+              <div class="total-box">
+                <div>
+                  <div class="total-lbl">Order Total</div>
+                  <div
+                    style="
+                      font-size: 0.73rem;
+                      color: var(--muted);
+                      margin-top: 2px;
+                    "
+                  >
+                    Unit Price × Quantity
+                  </div>
+                </div>
+                <div class="total-val" id="total-disp">₹0.00</div>
+              </div>
+              <div class="fa">
+                <button class="btn btn-p" onclick="recordSale()">
+                  ✓ Record Sale
+                </button>
+                <button class="btn btn-g" onclick="clearForm()">Clear</button>
+              </div>
+              <div class="imsg" id="sale-msg"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- HISTORY -->
+        <div class="view" id="view-history">
+          <div class="ph"><div class="pt">Sales History</div></div>
+          <div class="sg3" style="margin-bottom: 18px">
+            <div class="sc sm gr">
+              <div class="sl">Total Revenue</div>
+              <div class="sv" id="h-rev">₹0.00</div>
+            </div>
+            <div class="sc sm pu">
+              <div class="sl">Transactions</div>
+              <div class="sv" id="h-cnt">0</div>
+            </div>
+            <div class="sc sm bl">
+              <div class="sl">Units Sold</div>
+              <div class="sv" id="h-u">0</div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="toolbar">
+              <div class="sw">
+                <span class="sic">🔍</span
+                ><input
+                  class="si-in"
+                  id="hSrch"
+                  placeholder="Filter by product name…"
+                  oninput="renderHist()"
+                />
+              </div>
+              <input
+                type="date"
+                class="date-in"
+                id="hDate"
+                onchange="renderHist()"
+                title="Filter by date"
+              />
+              <button
+                class="btn btn-g btn-sm"
+                onclick="
+                  document.getElementById('hSrch').value = '';
+                  document.getElementById('hDate').value = '';
+                  renderHist();
+                "
+              >
+                Clear
+              </button>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Sale ID</th>
+                  <th>Sale Date</th>
+                  <th>Product</th>
+                  <th>Product ID</th>
+                  <th>Qty</th>
+                  <th>Total Amount</th>
+                  <th>Sold By</th>
+                </tr>
+              </thead>
+              <tbody id="hist-tb"></tbody>
+            </table>
+            <div id="hist-emp" style="display: none">
+              <div class="empty">
+                <div class="ei">📋</div>
+                <div class="et">No sales records yet.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PRODUCTS -->
+        <div class="view" id="view-products">
+          <div class="ph"><div class="pt">Product Catalog</div></div>
+          <div class="panel">
+            <div class="toolbar">
+              <div class="sw">
+                <span class="sic">🔍</span
+                ><input
+                  class="si-in"
+                  id="cSrch"
+                  placeholder="Search products…"
+                  oninput="renderCat()"
+                />
+              </div>
+              <select class="fsel" id="cFil" onchange="renderCat()">
+                <option value="">All Products</option>
+                <option value="ok">In Stock</option>
+                <option value="low">Low Stock</option>
+                <option value="out">Out of Stock</option>
+              </select>
+            </div>
+            <div class="pgrid" id="prod-grid"></div>
+            <div id="prod-emp" style="display: none">
+              <div class="empty">
+                <div class="ei">📦</div>
+                <div class="et">No products in catalog yet.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      const API = "http://localhost:3000";
+
+      /* ── ROLE GUARD: Sales Officers only ─────────────────── */
+      let SESSION_USER = {};
+      (function guardSales() {
+        try {
+          SESSION_USER = JSON.parse(localStorage.getItem("omni_user") || "{}");
+        } catch (e) {}
+        if (!SESSION_USER.username) {
+          window.location.href = "login_page.html";
+          return;
+        }
+        if ((SESSION_USER.role || "").toLowerCase() !== "sales officer") {
+          alert("Access denied. This dashboard is for Sales Officers only.");
+          localStorage.removeItem("omni_user");
+          window.location.href = "login_page.html";
+          return;
+        }
+        document.getElementById("uname").textContent = SESSION_USER.username;
+        document.getElementById("ava").textContent = SESSION_USER.username
+          .substring(0, 2)
+          .toUpperCase();
+      })();
+
+      /* ── INIT ─────────────────────────────────────────────── */
+      document.getElementById("dateEl").textContent =
+        new Date().toLocaleDateString("en-IN", {
+          weekday: "short",
+          day: "numeric",
+          month: "short",
+        });
+      document.getElementById("f-date").value = new Date()
+        .toISOString()
+        .split("T")[0];
+
+      let products = [],
+        sales = [];
+
+      loadAll();
+
+      /* ── API HELPER ───────────────────────────────────────── */
+      async function api(method, path, body) {
+        const opts = {
+          method,
+          headers: { "Content-Type": "application/json" },
+        };
+        if (body) opts.body = JSON.stringify(body);
+        const r = await fetch(API + path, opts);
+        const d = await r.json();
+        if (!r.ok) throw new Error(d.message || "Request failed");
+        return d;
+      }
+
+      /* ── LOAD ALL FROM DB ─────────────────────────────────── */
+      async function loadAll() {
+        try {
+          [products, sales] = await Promise.all([
+            fetch(API + "/products").then((r) => r.json()),
+            fetch(API + "/sales").then((r) => r.json()),
+          ]);
+        } catch (e) {
+          toast("Cannot reach server. Is it running on port 3000?", "err");
+          return;
+        }
+        rfDrop();
+        upAll();
+      }
+
+      /* ── NAVIGATION ───────────────────────────────────────── */
+      function toggleSB() {
+        const s = document.getElementById("sb"),
+          b = document.getElementById("togBtn");
+        s.classList.toggle("col");
+        b.textContent = s.classList.contains("col") ? "▶" : "◀";
+      }
+      function sv(v, el) {
+        document
+          .querySelectorAll(".view")
+          .forEach((x) => x.classList.remove("act"));
+        document.getElementById("view-" + v).classList.add("act");
+        document
+          .querySelectorAll(".ni")
+          .forEach((x) => x.classList.remove("act"));
+        if (el) el.classList.add("act");
+        document.getElementById("pgTitle").textContent = el
+          ? el.querySelector(".lbl")?.textContent || v
+          : v;
+        loadAll();
+      }
+      function logout() {
+        localStorage.removeItem("omni_user");
+        window.location.href = "login_page.html";
+      }
+
+      /* ── UTILITIES ────────────────────────────────────────── */
+      function toast(msg, type = "ok") {
+        const t = document.createElement("div");
+        t.className = "toast " + type;
+        t.textContent = (type === "ok" ? "✅ " : "⚠ ") + msg;
+        document.body.appendChild(t);
+        setTimeout(() => (t.style.opacity = "0"), 2500);
+        setTimeout(() => t.remove(), 2800);
+      }
+      function showMsg(id, txt, type) {
+        const m = document.getElementById(id);
+        m.className = "imsg show " + type;
+        m.innerHTML = (type === "ok" ? "✅" : "⚠") + " " + txt;
+        if (type === "err") setTimeout(() => m.classList.remove("show"), 5000);
+      }
+      function fmtDate(d) {
+        if (!d) return "—";
+        const s = typeof d === "string" ? d : new Date(d).toISOString();
+        const [y, m, day] = s.slice(0, 10).split("-");
+        return `${parseInt(day)}/${parseInt(m)}/${y}`;
+      }
+      function fmt(n) {
+        return (
+          "₹" +
+          Number(n).toLocaleString("en-IN", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })
+        );
+      }
+      function ss(s, rp = 10) {
+        return s <= 0 ? "out" : s <= rp ? "low" : "ok";
+      }
+      function bdg(cls, lbl) {
+        return `<span class="badge ${cls}"><span class="dot"></span>${lbl}</span>`;
+      }
+      function ssL(s) {
+        return s === "ok"
+          ? "In Stock"
+          : s === "low"
+            ? "Low Stock"
+            : "Out of Stock";
+      }
+
+      /* ── PRODUCT DROPDOWN ─────────────────────────────────── */
+      function rfDrop() {
+        const sel = document.getElementById("f-prod");
+        if (!sel) return;
+        const cur = sel.value;
+        sel.innerHTML =
+          '<option value="">— Select a product —</option>' +
+          products
+            .map(
+              (p) =>
+                `<option value="${p.product_id}" data-price="${p.unit_price}" data-stock="${p.stock_level}"
+              ${p.stock_level <= 0 ? "disabled" : ""}>
+              PRD-${p.product_id}: ${p.product_name} (Stock: ${p.stock_level}) — ${fmt(p.unit_price)}
+            </option>`,
+            )
+            .join("");
+        sel.value = cur;
+      }
+
+      /* ── SALE FORM ────────────────────────────────────────── */
+      function onPC() {
+        const sel = document.getElementById("f-prod"),
+          opt = sel.options[sel.selectedIndex];
+        document.getElementById("f-price").value = opt?.dataset?.price
+          ? fmt(Number(opt.dataset.price))
+          : "";
+        document.getElementById("f-stk").value =
+          opt?.dataset?.stock !== undefined ? opt.dataset.stock + " units" : "";
+        document.getElementById("f-qty").value = "";
+        document.getElementById("total-disp").textContent = "₹0.00";
+        document.getElementById("sale-msg").classList.remove("show");
+      }
+
+      function updTotal() {
+        const sel = document.getElementById("f-prod"),
+          opt = sel.options[sel.selectedIndex];
+        const price = parseFloat(opt?.dataset?.price) || 0;
+        const stock = parseInt(opt?.dataset?.stock) || 0;
+        const qty = parseInt(document.getElementById("f-qty").value) || 0;
+        document.getElementById("total-disp").textContent = fmt(price * qty);
+        if (qty < 0) showMsg("sale-msg", "Quantity cannot be negative.", "err");
+        else if (qty > stock && stock > 0)
+          showMsg("sale-msg", `Only ${stock} unit(s) available.`, "err");
+        else document.getElementById("sale-msg").classList.remove("show");
+      }
+
+      async function recordSale() {
+        const sel = document.getElementById("f-prod"),
+          opt = sel.options[sel.selectedIndex];
+        const pid = parseInt(sel.value);
+        const qty = parseInt(document.getElementById("f-qty").value) || 0;
+        const price = parseFloat(opt?.dataset?.price) || 0;
+        const stock = parseInt(opt?.dataset?.stock) || 0;
+        const dt = document.getElementById("f-date").value;
+
+        if (!pid) return showMsg("sale-msg", "Please select a product.", "err");
+        if (qty < 1)
+          return showMsg("sale-msg", "Quantity must be at least 1.", "err");
+        if (!dt)
+          return showMsg("sale-msg", "Please select a sale date.", "err");
+        if (qty > stock)
+          return showMsg(
+            "sale-msg",
+            `Insufficient stock. Only ${stock} unit(s) available.`,
+            "err",
+          );
+
+        const total = price * qty;
+        try {
+          await api("POST", "/sales", {
+            sale_date: dt,
+            total_amount: total,
+            quantity: qty,
+            product_id: pid,
+            user_id: SESSION_USER.user_id || 1,
+          });
+          const p = products.find((x) => x.product_id === pid);
+          showMsg(
+            "sale-msg",
+            `Sale recorded — ${p?.product_name}, Qty: ${qty}, Total: ${fmt(total)}`,
+            "ok",
+          );
+          clearForm();
+          await loadAll();
+        } catch (e) {
+          showMsg("sale-msg", e.message || "Failed to record sale.", "err");
+        }
+      }
+
+      function clearForm() {
+        document.getElementById("f-prod").value = "";
+        document.getElementById("f-qty").value = "";
+        document.getElementById("f-price").value = "";
+        document.getElementById("f-stk").value = "";
+        document.getElementById("f-date").value = new Date()
+          .toISOString()
+          .split("T")[0];
+        document.getElementById("total-disp").textContent = "₹0.00";
+      }
+
+      /* ── RENDER ALL ───────────────────────────────────────── */
+      function upAll() {
+        const today = new Date().toLocaleDateString("en-CA"); // gives YYYY-MM-DD in local time
+        const todaySales = sales.filter((s) => {
+          const d = s.sale_date ? String(s.sale_date).slice(0, 10) : "";
+          return d === today;
+        });
+        const totalRev = sales.reduce(
+          (a, s) => a + Number(s.total_amount || 0),
+          0,
+        );
+        const todayRev = todaySales.reduce(
+          (a, s) => a + Number(s.total_amount || 0),
+          0,
+        );
+        const totalUnits = sales.reduce((a, s) => a + (s.quantity || 0), 0);
+
+        document.getElementById("d-trev").textContent = fmt(todayRev);
+        document.getElementById("d-tcnt").textContent = todaySales.length;
+        document.getElementById("d-pav").textContent = products.filter(
+          (p) => p.stock_level > 0,
+        ).length;
+        document.getElementById("d-arev").textContent = fmt(totalRev);
+        document.getElementById("d-acnt").textContent = sales.length;
+        document.getElementById("d-aunit").textContent =
+          totalUnits.toLocaleString("en-IN");
+
+        const rc = [...sales].slice(0, 8);
+        document.getElementById("d-rcnt").textContent = rc.length
+          ? `Showing ${rc.length} of ${sales.length}`
+          : "";
+        document.getElementById("d-stb").innerHTML = sales.length
+          ? rc
+              .map((s) => {
+                return `<tr>
+                <td class="mn b">SL-${s.sale_id}</td>
+                <td>${fmtDate(s.sale_date)}</td>
+                <td class="b">${s.product_name || "—"}</td>
+                <td class="mn">PRD-${s.product_id}</td>
+                <td>${s.quantity}</td>
+                <td class="b" style="color:var(--acc2);">${fmt(s.total_amount)}</td>
+                <td class="b">${s.user_name || "USR-" + s.user_id}</td>
+              </tr>`;
+              })
+              .join("")
+          : `<tr><td colspan="7"><div class="empty"><div class="ei">🧾</div><div class="et">No sales recorded yet.</div></div></td></tr>`;
+
+        document.getElementById("h-rev").textContent = fmt(totalRev);
+        document.getElementById("h-cnt").textContent = sales.length;
+        document.getElementById("h-u").textContent =
+          totalUnits.toLocaleString("en-IN");
+
+        renderHist();
+        renderCat();
+      }
+
+      /* ── SALES HISTORY TABLE ──────────────────────────────── */
+      function renderHist() {
+        const q = (document.getElementById("hSrch")?.value || "").toLowerCase();
+        const df = document.getElementById("hDate")?.value || "";
+        const l = [...sales].filter((s) => {
+          const p = products.find((x) => x.product_id === s.product_id);
+          const nameMatch =
+            !q ||
+            (s.product_name || "").toLowerCase().includes(q) ||
+            (p?.product_name || "").toLowerCase().includes(q);
+          const dateStr = s.sale_date ? String(s.sale_date).slice(0, 10) : "";
+          const dateMatch = !df || dateStr === df;
+          return nameMatch && dateMatch;
+        });
+        document.getElementById("hist-emp").style.display = l.length
+          ? "none"
+          : "block";
+        document.getElementById("hist-tb").innerHTML = l
+          .map((s) => {
+            return `<tr>
+            <td class="mn b">SL-${s.sale_id}</td>
+            <td>${fmtDate(s.sale_date)}</td>
+            <td class="b">${s.product_name || "—"}</td>
+            <td class="mn">PRD-${s.product_id}</td>
+            <td>${s.quantity}</td>
+            <td class="b" style="color:var(--acc2);">${fmt(s.total_amount)}</td>
+            <td class="b">${s.user_name || "USR-" + s.user_id}</td>
+          </tr>`;
+          })
+          .join("");
+      }
+
+      /* ── PRODUCT CATALOG GRID ─────────────────────────────── */
+      function renderCat() {
+        const q = (document.getElementById("cSrch")?.value || "").toLowerCase();
+        const f = document.getElementById("cFil")?.value || "";
+        const l = products.filter(
+          (p) =>
+            p.product_name.toLowerCase().includes(q) &&
+            (!f || ss(p.stock_level) === f),
+        );
+        document.getElementById("prod-emp").style.display = l.length
+          ? "none"
+          : "block";
+        document.getElementById("prod-grid").innerHTML = l
+          .map((p) => {
+            const s = ss(p.stock_level);
+            const sc =
+              s === "out" ? "#fca5a5" : s === "low" ? "#fde68a" : "#6ee7b7";
+            return `<div class="pc${s === "out" ? " oos" : ""}">
+            <div class="pc-name">${p.product_name}</div>
+            <div class="pc-id">PRD-${p.product_id} · ${p.category_name || "CAT-" + p.category_id}</div>
+            <div class="pc-price">${fmt(p.unit_price)}</div>
+            <div class="pc-stock">Stock: <span style="color:${sc}">${p.stock_level} units</span></div>
+            <div class="pc-foot">
+              ${bdg(s, ssL(s))}
+              ${
+                s !== "out"
+                  ? `<button class="btn btn-p btn-sm" onclick="qs(${p.product_id})">Sell →</button>`
+                  : `<span style="font-size:.73rem;color:var(--muted);">Unavailable</span>`
+              }
+            </div>
+          </div>`;
+          })
+          .join("");
+      }
+
+      /* ── QUICK SELL ───────────────────────────────────────── */
+      function qs(pid) {
+        sv("newsale", document.querySelectorAll(".ni")[1]);
+        setTimeout(() => {
+          const sel = document.getElementById("f-prod");
+          if (sel) {
+            sel.value = pid;
+            onPC();
+          }
+        }, 80);
+      }
+    </script>
+  </body>
+</html>

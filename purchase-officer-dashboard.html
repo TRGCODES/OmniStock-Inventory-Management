@@ -1,0 +1,1416 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>OmniStock | Purchase Officer</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      :root {
+        --bg: #060c18;
+        --surf: #0c1525;
+        --surf2: #111e30;
+        --bdr: #1a2d46;
+        --bdr2: #203552;
+        --acc: #f97316;
+        --acc2: #fb923c;
+        --green: #10b981;
+        --blue: #3b82f6;
+        --red: #ef4444;
+        --yellow: #f59e0b;
+        --cyan: #06b6d4;
+        --txt: #e8eef7;
+        --txt2: #8ba4c0;
+        --muted: #3d5570;
+      }
+      html,
+      body {
+        height: 100%;
+        font-family: "Outfit", sans-serif;
+        background: var(--bg);
+        color: var(--txt);
+        overflow: hidden;
+      }
+      body {
+        display: flex;
+      }
+
+      .sidebar {
+        width: 240px;
+        height: 100vh;
+        background: var(--surf);
+        border-right: 1px solid var(--bdr);
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        transition: width 0.3s;
+        overflow: hidden;
+      }
+      .sidebar.col {
+        width: 68px;
+      }
+      .s-head {
+        padding: 20px 16px;
+        border-bottom: 1px solid var(--bdr);
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        flex-shrink: 0;
+      }
+      .logo-ic {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        border-radius: 11px;
+        background: linear-gradient(135deg, var(--acc), #ea580c);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 17px;
+        box-shadow: 0 4px 14px rgba(249, 115, 22, 0.3);
+      }
+      .logo-txt {
+        overflow: hidden;
+        white-space: nowrap;
+      }
+      .logo-name {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.1rem;
+        font-weight: 700;
+        letter-spacing: -0.2px;
+      }
+      .logo-role {
+        font-size: 0.62rem;
+        color: var(--acc2);
+        font-weight: 600;
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+      }
+      .sidebar.col .logo-txt {
+        display: none;
+      }
+      .s-nav {
+        flex: 1;
+        padding: 12px 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+      .nl {
+        font-size: 0.6rem;
+        font-weight: 700;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        padding: 8px 9px 4px;
+        white-space: nowrap;
+      }
+      .sidebar.col .nl {
+        opacity: 0;
+        height: 20px;
+      }
+      .ni {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 9px 10px;
+        border-radius: 9px;
+        cursor: pointer;
+        color: var(--txt2);
+        font-size: 0.86rem;
+        font-weight: 500;
+        border: 1px solid transparent;
+        background: none;
+        width: 100%;
+        text-align: left;
+        transition: all 0.15s;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+      .ni:hover {
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--txt);
+      }
+      .ni.act {
+        background: rgba(249, 115, 22, 0.1);
+        color: var(--acc2);
+        border-color: rgba(249, 115, 22, 0.2);
+      }
+      .ni .ico {
+        font-size: 15px;
+        width: 20px;
+        min-width: 20px;
+        text-align: center;
+        flex-shrink: 0;
+      }
+      .ni .lbl {
+        overflow: hidden;
+      }
+      .sidebar.col .ni .lbl {
+        display: none;
+      }
+      .s-foot {
+        margin-top: auto;
+        padding: 12px 8px;
+        border-top: 1px solid var(--bdr);
+        flex-shrink: 0;
+      }
+      .u-card {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        padding: 9px 10px;
+        border-radius: 9px;
+        background: rgba(255, 255, 255, 0.03);
+      }
+      .ava {
+        width: 32px;
+        min-width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        background: linear-gradient(135deg, var(--acc), #ea580c);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 0.75rem;
+        color: #fff;
+      }
+      .u-name {
+        font-size: 0.83rem;
+        font-weight: 600;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .u-role2 {
+        font-size: 0.67rem;
+        color: var(--acc2);
+        font-weight: 500;
+      }
+      .sidebar.col .u-info {
+        display: none;
+      }
+
+      .main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        height: 100vh;
+        overflow: hidden;
+      }
+      .topbar {
+        height: 56px;
+        padding: 0 24px;
+        border-bottom: 1px solid var(--bdr);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: var(--surf);
+        flex-shrink: 0;
+      }
+      .bc {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.83rem;
+        color: var(--txt2);
+      }
+      .bc .cur {
+        color: var(--txt);
+        font-weight: 600;
+      }
+      .tb-r {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .tb-date {
+        font-size: 0.75rem;
+        color: var(--muted);
+      }
+      .logout {
+        padding: 6px 14px;
+        background: rgba(239, 68, 68, 0.08);
+        border: 1px solid rgba(239, 68, 68, 0.18);
+        color: #fca5a5;
+        border-radius: 7px;
+        cursor: pointer;
+        font-family: "Outfit", sans-serif;
+        font-size: 0.8rem;
+        font-weight: 600;
+        transition: background 0.18s;
+      }
+      .logout:hover {
+        background: rgba(239, 68, 68, 0.16);
+      }
+      .tog {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: var(--surf2);
+        border: 1px solid var(--bdr2);
+        color: var(--txt2);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        transition: all 0.2s;
+        margin-right: 10px;
+      }
+      .tog:hover {
+        background: var(--bdr2);
+        color: var(--txt);
+      }
+
+      .content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 24px;
+      }
+      .view {
+        display: none;
+        animation: vi 0.22s ease;
+      }
+      .view.act {
+        display: block;
+      }
+      @keyframes vi {
+        from {
+          opacity: 0;
+          transform: translateY(5px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .ph {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 22px;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .pt {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.4rem;
+        font-weight: 700;
+        letter-spacing: -0.3px;
+      }
+
+      .sg {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+        margin-bottom: 22px;
+      }
+      .sc {
+        background: var(--surf);
+        border: 1px solid var(--bdr);
+        border-radius: 14px;
+        padding: 20px;
+        position: relative;
+        overflow: hidden;
+        transition:
+          transform 0.18s,
+          border-color 0.18s;
+      }
+      .sc:hover {
+        transform: translateY(-1px);
+        border-color: var(--bdr2);
+      }
+      .sc::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+      }
+      .sc.or::before {
+        background: linear-gradient(90deg, var(--acc), #fbbf24);
+      }
+      .sc.bl::before {
+        background: linear-gradient(90deg, var(--blue), var(--cyan));
+      }
+      .sc.gr::before {
+        background: linear-gradient(90deg, var(--green), #34d399);
+      }
+      .sc.ye::before {
+        background: linear-gradient(90deg, var(--yellow), #fbbf24);
+      }
+      .si {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        margin-bottom: 14px;
+      }
+      .si.or {
+        background: rgba(249, 115, 22, 0.1);
+      }
+      .si.bl {
+        background: rgba(59, 130, 246, 0.1);
+      }
+      .si.gr {
+        background: rgba(16, 185, 129, 0.1);
+      }
+      .si.ye {
+        background: rgba(245, 158, 11, 0.1);
+      }
+      .sl {
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: var(--txt2);
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        margin-bottom: 5px;
+      }
+      .sv {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.8rem;
+        font-weight: 700;
+        line-height: 1;
+      }
+
+      .panel {
+        background: var(--surf);
+        border: 1px solid var(--bdr);
+        border-radius: 14px;
+        overflow: hidden;
+        margin-bottom: 18px;
+      }
+      .panel-h {
+        padding: 14px 20px;
+        border-bottom: 1px solid var(--bdr);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+      }
+      .panel-t {
+        font-size: 0.9rem;
+        font-weight: 700;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      thead tr {
+        background: rgba(255, 255, 255, 0.02);
+      }
+      th {
+        padding: 10px 16px;
+        text-align: left;
+        font-size: 0.67rem;
+        font-weight: 700;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.9px;
+        border-bottom: 1px solid var(--bdr);
+        white-space: nowrap;
+      }
+      td {
+        padding: 12px 16px;
+        font-size: 0.855rem;
+        color: var(--txt2);
+        border-bottom: 1px solid rgba(26, 45, 70, 0.5);
+      }
+      tr:last-child td {
+        border-bottom: none;
+      }
+      tbody tr:hover {
+        background: rgba(255, 255, 255, 0.02);
+      }
+      td.b {
+        color: var(--txt);
+        font-weight: 600;
+      }
+      td.mn {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 0.8rem;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 3px 10px;
+        border-radius: 20px;
+        font-size: 0.68rem;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+      .badge .dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: currentColor;
+      }
+      .badge.ok {
+        background: rgba(16, 185, 129, 0.1);
+        color: #6ee7b7;
+        border: 1px solid rgba(16, 185, 129, 0.2);
+      }
+
+      .btn {
+        padding: 7px 14px;
+        border-radius: 8px;
+        font-family: "Outfit", sans-serif;
+        font-size: 0.8rem;
+        font-weight: 600;
+        cursor: pointer;
+        border: 1px solid transparent;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        transition: all 0.15s;
+      }
+      .btn-p {
+        background: linear-gradient(135deg, var(--acc), #ea580c);
+        color: #fff;
+        box-shadow: 0 3px 10px rgba(249, 115, 22, 0.2);
+      }
+      .btn-p:hover {
+        box-shadow: 0 5px 16px rgba(249, 115, 22, 0.35);
+        transform: translateY(-1px);
+      }
+      .btn-g {
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--txt2);
+        border-color: var(--bdr2);
+      }
+      .btn-g:hover {
+        background: rgba(255, 255, 255, 0.07);
+        color: var(--txt);
+      }
+
+      .toolbar {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        padding: 13px 16px;
+        border-bottom: 1px solid var(--bdr);
+        flex-wrap: wrap;
+      }
+      .sw {
+        flex: 1;
+        min-width: 160px;
+        position: relative;
+      }
+      .sw .sic {
+        position: absolute;
+        left: 11px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 12px;
+        opacity: 0.4;
+      }
+      .si-in {
+        width: 100%;
+        padding: 8px 11px 8px 32px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--bdr);
+        border-radius: 8px;
+        color: var(--txt);
+        font-family: "Outfit", sans-serif;
+        font-size: 0.845rem;
+      }
+      .si-in::placeholder {
+        color: var(--muted);
+      }
+      .si-in:focus {
+        outline: none;
+        border-color: var(--acc);
+      }
+
+      .form-panel {
+        padding: 22px;
+      }
+      .fg {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+      .s2 {
+        grid-column: span 2;
+      }
+      .fi {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+      .fi label {
+        font-size: 0.68rem;
+        font-weight: 700;
+        color: var(--txt2);
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+      }
+      .fi input,
+      .fi select {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--bdr);
+        border-radius: 9px;
+        color: var(--txt);
+        font-family: "Outfit", sans-serif;
+        font-size: 0.88rem;
+        padding: 10px 13px;
+        transition: all 0.15s;
+      }
+      .fi input::placeholder {
+        color: var(--muted);
+      }
+      .fi input:focus,
+      .fi select:focus {
+        outline: none;
+        border-color: var(--acc);
+        background: rgba(249, 115, 22, 0.04);
+        box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+      }
+      .fi select option {
+        background: var(--surf2);
+      }
+      .fa {
+        margin-top: 18px;
+        display: flex;
+        gap: 9px;
+      }
+
+      .imsg {
+        padding: 10px 13px;
+        border-radius: 9px;
+        font-size: 0.82rem;
+        font-weight: 500;
+        display: none;
+        align-items: center;
+        gap: 8px;
+        margin-top: 12px;
+      }
+      .imsg.show {
+        display: flex;
+      }
+      .imsg.ok {
+        background: rgba(16, 185, 129, 0.1);
+        border: 1px solid rgba(16, 185, 129, 0.2);
+        color: #6ee7b7;
+      }
+      .imsg.err {
+        background: rgba(239, 68, 68, 0.1);
+        border: 1px solid rgba(239, 68, 68, 0.2);
+        color: #fca5a5;
+      }
+
+      .two {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+      }
+      .empty {
+        padding: 48px 20px;
+        text-align: center;
+        color: var(--muted);
+      }
+      .ei {
+        font-size: 30px;
+        margin-bottom: 10px;
+      }
+      .et {
+        font-size: 0.855rem;
+      }
+
+      .toast {
+        position: fixed;
+        bottom: 22px;
+        right: 22px;
+        padding: 12px 16px;
+        border-radius: 11px;
+        font-size: 0.855rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.4);
+        z-index: 9999;
+        animation: ti 0.25s ease;
+        max-width: 320px;
+      }
+      @keyframes ti {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .toast.ok {
+        background: rgba(16, 185, 129, 0.15);
+        border: 1px solid rgba(16, 185, 129, 0.3);
+        color: #6ee7b7;
+      }
+      .toast.err {
+        background: rgba(239, 68, 68, 0.15);
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        color: #fca5a5;
+      }
+
+      ::-webkit-scrollbar {
+        width: 4px;
+        height: 4px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--bdr2);
+        border-radius: 10px;
+      }
+
+      @media (max-width: 900px) {
+        .sg {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .two {
+          grid-template-columns: 1fr;
+        }
+        .fg {
+          grid-template-columns: 1fr;
+        }
+        .s2 {
+          grid-column: span 1;
+        }
+      }
+      @media (max-width: 600px) {
+        .sidebar {
+          width: 0 !important;
+        }
+        .content {
+          padding: 16px;
+        }
+        .sg {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sidebar" id="sb">
+      <div class="s-head">
+        <div class="logo-ic">🛒</div>
+        <div class="logo-txt">
+          <div class="logo-name">OmniStock</div>
+          <div class="logo-role">Purchase Officer</div>
+        </div>
+      </div>
+      <nav class="s-nav">
+        <div class="nl">Main</div>
+        <button class="ni act" onclick="sv('dashboard', this)">
+          <span class="ico">⊞</span><span class="lbl">Dashboard</span>
+        </button>
+        <div class="nl">Procurement</div>
+        <button class="ni" onclick="sv('suppliers', this)">
+          <span class="ico">🏭</span><span class="lbl">Suppliers</span>
+        </button>
+        <button class="ni" onclick="sv('neworder', this)">
+          <span class="ico">➕</span><span class="lbl">New Purchase</span>
+        </button>
+        <button class="ni" onclick="sv('history', this)">
+          <span class="ico">📋</span><span class="lbl">Purchase History</span>
+        </button>
+        <div class="nl">Inventory</div>
+        <button class="ni" onclick="sv('stockview', this)">
+          <span class="ico">📦</span><span class="lbl">Stock View</span>
+        </button>
+      </nav>
+      <div class="s-foot">
+        <div class="u-card">
+          <div class="ava" id="ava">PO</div>
+          <div class="u-info">
+            <div class="u-name" id="uname">Purchase Officer</div>
+            <div class="u-role2">Procurement</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="main">
+      <div class="topbar">
+        <div style="display: flex; align-items: center">
+          <button class="tog" id="togBtn" onclick="toggleSB()">◀</button>
+          <div class="bc">
+            OmniStock <span style="color: var(--muted); margin: 0 3px">›</span
+            ><span class="cur" id="pgTitle">Dashboard</span>
+          </div>
+        </div>
+        <div class="tb-r">
+          <div class="tb-date" id="dateEl"></div>
+          <button class="logout" onclick="logout()">⏻ Sign Out</button>
+        </div>
+      </div>
+
+      <div class="content">
+        <!-- DASHBOARD -->
+        <div class="view act" id="view-dashboard">
+          <div class="ph">
+            <div class="pt">Purchase Overview</div>
+            <button
+              class="btn btn-p"
+              onclick="sv('neworder', document.querySelectorAll('.ni')[2])"
+            >
+              + New Purchase
+            </button>
+          </div>
+          <div class="sg">
+            <div class="sc or">
+              <div class="si or">🏭</div>
+              <div class="sl">Suppliers</div>
+              <div class="sv" id="d-sup">0</div>
+            </div>
+            <div class="sc bl">
+              <div class="si bl">📋</div>
+              <div class="sl">Total Orders</div>
+              <div class="sv" id="d-ord">0</div>
+            </div>
+            <div class="sc gr">
+              <div class="si gr">📦</div>
+              <div class="sl">Total Qty Ordered</div>
+              <div class="sv" id="d-qty">0</div>
+            </div>
+            <div class="sc ye">
+              <div class="si ye">📅</div>
+              <div class="sl">Orders This Month</div>
+              <div class="sv" id="d-mon">0</div>
+            </div>
+          </div>
+          <div class="two">
+            <div class="panel">
+              <div class="panel-h">
+                <span class="panel-t">📋 Recent Purchases</span>
+              </div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Purchase ID</th>
+                    <th>Product ID</th>
+                    <th>Supplier</th>
+                    <th>Qty</th>
+                    <th>Date</th>
+                  </tr>
+                </thead>
+                <tbody id="d-otb"></tbody>
+              </table>
+            </div>
+            <div class="panel">
+              <div class="panel-h">
+                <span class="panel-t">🏭 Active Suppliers</span>
+              </div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Supplier ID</th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="d-stb"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUPPLIERS -->
+        <div class="view" id="view-suppliers">
+          <div class="ph"><div class="pt">Suppliers</div></div>
+          <div class="panel" style="margin-bottom: 18px">
+            <div class="panel-h">
+              <span class="panel-t">➕ Add Supplier</span>
+            </div>
+            <div class="form-panel">
+              <div class="fg">
+                <div class="fi s2">
+                  <label>Supplier Name</label
+                  ><input id="s-n" placeholder="Company name" />
+                </div>
+                <div class="fi">
+                  <label>Contact Person</label
+                  ><input id="s-c" placeholder="Contact person name" />
+                </div>
+                <div class="fi">
+                  <label>Phone (digits only)</label
+                  ><input
+                    id="s-p"
+                    placeholder="Phone number"
+                    maxlength="15"
+                    inputmode="numeric"
+                  />
+                </div>
+              </div>
+              <div class="fa">
+                <button class="btn btn-p" onclick="addSupplier()">
+                  Add Supplier
+                </button>
+                <button class="btn btn-g" onclick="clearSupForm()">
+                  Clear
+                </button>
+              </div>
+              <div class="imsg" id="sup-msg"></div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="toolbar">
+              <div class="sw">
+                <span class="sic">🔍</span
+                ><input
+                  class="si-in"
+                  id="spSrch"
+                  placeholder="Search suppliers…"
+                  oninput="renderSup()"
+                />
+              </div>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Supplier ID</th>
+                  <th>Name</th>
+                  <th>Contact Person</th>
+                  <th>Phone</th>
+                  <th>Orders</th>
+                </tr>
+              </thead>
+              <tbody id="sup-tb"></tbody>
+            </table>
+            <div id="sup-emp" style="display: none">
+              <div class="empty">
+                <div class="ei">🏭</div>
+                <div class="et">No suppliers yet.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- NEW PURCHASE -->
+        <div class="view" id="view-neworder">
+          <div class="ph"><div class="pt">New Purchase Record</div></div>
+          <div class="panel">
+            <div class="panel-h">
+              <span class="panel-t">📋 Purchase Entry</span>
+            </div>
+            <div class="form-panel">
+              <div class="fg">
+                <div class="fi">
+                  <label>Supplier</label>
+                  <select id="o-sup">
+                    <option value="">— Select Supplier —</option>
+                  </select>
+                </div>
+                <div class="fi">
+                  <label>Product</label>
+                  <select id="o-prod">
+                    <option value="">— Select Product —</option>
+                  </select>
+                </div>
+                <div class="fi">
+                  <label>Quantity</label>
+                  <input type="number" id="o-qty" placeholder="0" min="1" />
+                </div>
+                <div class="fi">
+                  <label>Purchase Date</label>
+                  <input type="date" id="o-dt" />
+                </div>
+              </div>
+              <div class="fa">
+                <button class="btn btn-p" onclick="addOrder()">
+                  Record Purchase
+                </button>
+                <button class="btn btn-g" onclick="clearOrderForm()">
+                  Clear
+                </button>
+              </div>
+              <div class="imsg" id="ord-msg"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- HISTORY -->
+        <div class="view" id="view-history">
+          <div class="ph"><div class="pt">Purchase History</div></div>
+          <div class="panel">
+            <div class="toolbar">
+              <div class="sw">
+                <span class="sic">🔍</span
+                ><input
+                  class="si-in"
+                  id="hSrch"
+                  placeholder="Filter by supplier or product…"
+                  oninput="renderHist()"
+                />
+              </div>
+              <input
+                class="si-in"
+                type="date"
+                id="hDateFrom"
+                title="From date"
+                oninput="renderHist()"
+                style="width: auto"
+              />
+              <span
+                style="
+                  color: var(--muted);
+                  font-size: 0.8rem;
+                  white-space: nowrap;
+                "
+                >to</span
+              >
+              <input
+                class="si-in"
+                type="date"
+                id="hDateTo"
+                title="To date"
+                oninput="renderHist()"
+                style="width: auto"
+              />
+              <button class="btn btn-g" onclick="clearHistFilters()">
+                Clear
+              </button>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Purchase ID</th>
+                  <th>Date</th>
+                  <th>Product Name</th>
+                  <th>Supplier Name</th>
+                  <th>Quantity</th>
+                  <th>Recorded By</th>
+                </tr>
+              </thead>
+              <tbody id="hist-tb"></tbody>
+            </table>
+            <div id="hist-emp" style="display: none">
+              <div class="empty">
+                <div class="ei">📋</div>
+                <div class="et">No purchase records found.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STOCK VIEW -->
+        <div class="view" id="view-stockview">
+          <div class="ph"><div class="pt">Stock View</div></div>
+          <div class="panel">
+            <table>
+              <thead>
+                <tr>
+                  <th>Product ID</th>
+                  <th>Product Name</th>
+                  <th>Category</th>
+                  <th>Unit Price</th>
+                  <th>Current Stock</th>
+                  <th>Reorder Point</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="stk-tb"></tbody>
+            </table>
+            <div id="stk-emp" style="display: none">
+              <div class="empty">
+                <div class="ei">📦</div>
+                <div class="et">No products available.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const API = "http://localhost:3000";
+
+      /* ── PHONE: digits only ───────────────────────────────── */
+      document.getElementById("s-p").addEventListener("input", function () {
+        this.value = this.value.replace(/[^0-9]/g, "");
+      });
+
+      /* ── ROLE GUARD: Purchase Officers only ──────────────── */
+      let SESSION_USER = {};
+      (function guardPO() {
+        try {
+          SESSION_USER = JSON.parse(localStorage.getItem("omni_user") || "{}");
+        } catch (e) {}
+        if (!SESSION_USER.username) {
+          window.location.href = "login_page.html";
+          return;
+        }
+        const role = (SESSION_USER.role || "").toLowerCase();
+        if (!role.includes("purchase") && !role.includes("purchae")) {
+          alert("Access denied. This dashboard is for Purchase Officers only.");
+          localStorage.removeItem("omni_user");
+          window.location.href = "login_page.html";
+          return;
+        }
+        document.getElementById("uname").textContent = SESSION_USER.username;
+        document.getElementById("ava").textContent = SESSION_USER.username
+          .substring(0, 2)
+          .toUpperCase();
+      })();
+
+      /* ── INIT ─────────────────────────────────────────────── */
+      document.getElementById("dateEl").textContent =
+        new Date().toLocaleDateString("en-IN", {
+          weekday: "short",
+          day: "numeric",
+          month: "short",
+        });
+      function localToday() {
+        const d = new Date();
+        const y = d.getFullYear();
+        const m = String(d.getMonth() + 1).padStart(2, "0");
+        const day = String(d.getDate()).padStart(2, "0");
+        return `${y}-${m}-${day}`;
+      }
+      document.getElementById("o-dt").value = localToday();
+
+      let suppliers = [],
+        orders = [],
+        products = [];
+
+      loadAll();
+
+      /* ── API HELPER ───────────────────────────────────────── */
+      async function api(method, path, body) {
+        const opts = {
+          method,
+          headers: { "Content-Type": "application/json" },
+        };
+        if (body) opts.body = JSON.stringify(body);
+        const r = await fetch(API + path, opts);
+        const d = await r.json();
+        if (!r.ok) throw new Error(d.message || "Request failed");
+        return d;
+      }
+
+      /* ── LOAD ALL FROM DB ─────────────────────────────────── */
+      async function loadAll() {
+        try {
+          [suppliers, orders, products] = await Promise.all([
+            fetch(API + "/suppliers").then((r) => r.json()),
+            fetch(API + "/purchases").then((r) => r.json()),
+            fetch(API + "/products").then((r) => r.json()),
+          ]);
+        } catch (e) {
+          toast("Cannot reach server. Is it running on port 3000?", "err");
+          return;
+        }
+        upAll();
+      }
+
+      /* ── NAVIGATION ───────────────────────────────────────── */
+      function toggleSB() {
+        const s = document.getElementById("sb"),
+          b = document.getElementById("togBtn");
+        s.classList.toggle("col");
+        b.textContent = s.classList.contains("col") ? "▶" : "◀";
+      }
+      function sv(v, el) {
+        document
+          .querySelectorAll(".view")
+          .forEach((x) => x.classList.remove("act"));
+        document.getElementById("view-" + v).classList.add("act");
+        document
+          .querySelectorAll(".ni")
+          .forEach((x) => x.classList.remove("act"));
+        if (el) el.classList.add("act");
+        document.getElementById("pgTitle").textContent = el
+          ? el.querySelector(".lbl")?.textContent || v
+          : v;
+        loadAll();
+      }
+      function logout() {
+        localStorage.removeItem("omni_user");
+        window.location.href = "login_page.html";
+      }
+
+      /* ── UTILITIES ────────────────────────────────────────── */
+      function fmtDate(d) {
+        if (!d) return "—";
+        const s = typeof d === "string" ? d : new Date(d).toISOString();
+        const [y, m, day] = s.slice(0, 10).split("-");
+        return `${parseInt(day)}/${parseInt(m)}/${y}`;
+      }
+      function toast(msg, type = "ok") {
+        const t = document.createElement("div");
+        t.className = "toast " + type;
+        t.textContent = (type === "ok" ? "✅ " : "⚠ ") + msg;
+        document.body.appendChild(t);
+        setTimeout(() => (t.style.opacity = "0"), 2500);
+        setTimeout(() => t.remove(), 2800);
+      }
+      function showMsg(id, txt, type) {
+        const m = document.getElementById(id);
+        m.className = "imsg show " + type;
+        m.innerHTML = (type === "ok" ? "✅" : "⚠") + " " + txt;
+        if (type === "err") setTimeout(() => m.classList.remove("show"), 5000);
+      }
+
+      /* ── ADD SUPPLIER → POST /suppliers ───────────────────── */
+      async function addSupplier() {
+        const n = document.getElementById("s-n").value.trim();
+        const c = document.getElementById("s-c").value.trim();
+        const p = document.getElementById("s-p").value.trim();
+        if (!n) return showMsg("sup-msg", "Supplier name is required.", "err");
+        if (p && !/^\d+$/.test(p))
+          return showMsg("sup-msg", "Phone must contain digits only.", "err");
+        try {
+          await api("POST", "/suppliers", {
+            supplier_name: n,
+            contact_person: c,
+            phone: p,
+          });
+          showMsg("sup-msg", `Supplier "${n}" added.`, "ok");
+          clearSupForm();
+          await loadAll();
+        } catch (e) {
+          showMsg("sup-msg", e.message || "Failed to add supplier.", "err");
+        }
+      }
+      function clearSupForm() {
+        ["s-n", "s-c", "s-p"].forEach(
+          (id) => (document.getElementById(id).value = ""),
+        );
+      }
+
+      /* ── RECORD PURCHASE → POST /purchases ────────────────── */
+      function rfProdDrop() {
+        const sel = document.getElementById("o-prod");
+        if (!sel) return;
+        const cur = sel.value;
+        sel.innerHTML =
+          '<option value="">— Select Product —</option>' +
+          products
+            .map(
+              (p) =>
+                `<option value="${p.product_id}">PRD-${p.product_id}: ${p.product_name}</option>`,
+            )
+            .join("");
+        sel.value = cur;
+      }
+
+      async function addOrder() {
+        const supId = parseInt(document.getElementById("o-sup").value);
+        const prodId = parseInt(document.getElementById("o-prod").value);
+        const qty = parseInt(document.getElementById("o-qty").value);
+        const dt = document.getElementById("o-dt").value;
+
+        if (!supId)
+          return showMsg("ord-msg", "Please select a supplier.", "err");
+        if (!prodId)
+          return showMsg("ord-msg", "Please select a product.", "err");
+        if (!qty || qty < 1)
+          return showMsg("ord-msg", "Quantity must be at least 1.", "err");
+        if (!dt) return showMsg("ord-msg", "Please select a date.", "err");
+
+        const prod = products.find((p) => p.product_id === prodId);
+        try {
+          await api("POST", "/purchases", {
+            purchase_date: dt,
+            quantity: qty,
+            product_id: prodId,
+            supplier_id: supId,
+            user_id: SESSION_USER.user_id || 1,
+          });
+          showMsg(
+            "ord-msg",
+            `Purchase recorded — ${prod?.product_name}, Qty: ${qty}. Stock updated.`,
+            "ok",
+          );
+          clearOrderForm();
+          await loadAll();
+        } catch (e) {
+          showMsg("ord-msg", e.message || "Failed to record purchase.", "err");
+        }
+      }
+      function clearOrderForm() {
+        document.getElementById("o-prod").value = "";
+        document.getElementById("o-qty").value = "";
+        document.getElementById("o-dt").value = localToday();
+        document.getElementById("o-sup").value = "";
+      }
+
+      /* ── RENDER ALL ───────────────────────────────────────── */
+      function upAll() {
+        const thisMonth = new Date().toLocaleDateString("en-CA").slice(0, 7);
+        document.getElementById("d-sup").textContent = suppliers.length;
+        document.getElementById("d-ord").textContent = orders.length;
+        document.getElementById("d-qty").textContent = orders
+          .reduce((a, o) => a + (o.quantity || 0), 0)
+          .toLocaleString("en-IN");
+        document.getElementById("d-mon").textContent = orders.filter((o) => {
+          const d = o.purchase_date ? String(o.purchase_date).slice(0, 7) : "";
+          return d === thisMonth;
+        }).length;
+
+        /* Dashboard: recent orders */
+        document.getElementById("d-otb").innerHTML = orders.length
+          ? orders
+              .slice(0, 5)
+              .map((o) => {
+                return `<tr>
+                <td class="mn b">PR-${o.purchase_id}</td>
+                <td class="b">${o.product_name || "PRD-" + o.product_id}</td>
+                <td class="b">${o.supplier_name || "SUP-" + o.supplier_id}</td>
+                <td>${o.quantity}</td>
+                <td>${fmtDate(o.purchase_date)}</td>
+              </tr>`;
+              })
+              .join("")
+          : `<tr><td colspan="5"><div class="empty"><div class="ei">🛒</div><div class="et">No purchases yet</div></div></td></tr>`;
+
+        /* Dashboard: suppliers */
+        document.getElementById("d-stb").innerHTML = suppliers.length
+          ? suppliers
+              .slice(0, 5)
+              .map(
+                (s) =>
+                  `<tr>
+                <td class="mn b">SUP-${s.supplier_id}</td>
+                <td class="b">${s.supplier_name}</td>
+                <td>${s.phone || "—"}</td>
+                <td><span class="badge ok"><span class="dot"></span>Active</span></td>
+              </tr>`,
+              )
+              .join("")
+          : `<tr><td colspan="4"><div class="empty"><div class="ei">🏭</div><div class="et">No suppliers yet</div></div></td></tr>`;
+
+        /* Supplier dropdown */
+        const sel = document.getElementById("o-sup");
+        if (sel) {
+          const cur = sel.value;
+          sel.innerHTML =
+            '<option value="">— Select Supplier —</option>' +
+            suppliers
+              .map(
+                (s) =>
+                  `<option value="${s.supplier_id}">SUP-${s.supplier_id}: ${s.supplier_name}</option>`,
+              )
+              .join("");
+          sel.value = cur;
+        }
+        /* Product dropdown for purchase form */
+        rfProdDrop();
+
+        renderSup();
+        renderHist();
+
+        /* Stock view — actual current stock from products API */
+        document.getElementById("stk-emp").style.display = products.length
+          ? "none"
+          : "block";
+        document.getElementById("stk-tb").innerHTML = products
+          .map((p) => {
+            const low = p.stock_level <= p.reorder_point;
+            const statusBadge = low
+              ? `<span class="badge" style="background:rgba(239,68,68,.1);color:#fca5a5;border:1px solid rgba(239,68,68,.2);"><span class="dot"></span>Low Stock</span>`
+              : `<span class="badge ok"><span class="dot"></span>OK</span>`;
+            return `<tr>
+              <td class="mn b">PRD-${p.product_id}</td>
+              <td class="b">${p.product_name}</td>
+              <td>${p.category_name || "—"}</td>
+              <td>₹${parseFloat(p.unit_price).toLocaleString("en-IN", { minimumFractionDigits: 2 })}</td>
+              <td style="color:${low ? "var(--red)" : "var(--green)"};font-weight:700;">${p.stock_level}</td>
+              <td style="color:var(--txt2);">${p.reorder_point}</td>
+              <td>${statusBadge}</td>
+            </tr>`;
+          })
+          .join("");
+      }
+
+      /* ── SUPPLIERS TABLE ──────────────────────────────────── */
+      function renderSup() {
+        const q = (
+          document.getElementById("spSrch")?.value || ""
+        ).toLowerCase();
+        const l = suppliers.filter((s) =>
+          s.supplier_name.toLowerCase().includes(q),
+        );
+        document.getElementById("sup-emp").style.display = l.length
+          ? "none"
+          : "block";
+        document.getElementById("sup-tb").innerHTML = l
+          .map(
+            (s) =>
+              `<tr>
+            <td class="mn b">SUP-${s.supplier_id}</td>
+            <td class="b">${s.supplier_name}</td>
+            <td>${s.contact_person || "—"}</td>
+            <td>${s.phone || "—"}</td>
+            <td style="color:var(--acc2);font-weight:600;">${s.order_count || 0}</td>
+          </tr>`,
+          )
+          .join("");
+      }
+
+      /* ── PURCHASE HISTORY TABLE ───────────────────────────── */
+      function clearHistFilters() {
+        document.getElementById("hSrch").value = "";
+        document.getElementById("hDateFrom").value = "";
+        document.getElementById("hDateTo").value = "";
+        renderHist();
+      }
+      function renderHist() {
+        const q = (document.getElementById("hSrch")?.value || "").toLowerCase();
+        const from = document.getElementById("hDateFrom")?.value || "";
+        const to = document.getElementById("hDateTo")?.value || "";
+        const l = orders.filter((o) => {
+          const supName = (o.supplier_name || "").toLowerCase();
+          const prodName = (o.product_name || "").toLowerCase();
+          const textMatch = !q || supName.includes(q) || prodName.includes(q);
+          const dateStr = o.purchase_date
+            ? String(o.purchase_date).slice(0, 10)
+            : "";
+          const fromMatch = !from || dateStr >= from;
+          const toMatch = !to || dateStr <= to;
+          return textMatch && fromMatch && toMatch;
+        });
+        document.getElementById("hist-emp").style.display = l.length
+          ? "none"
+          : "block";
+        document.getElementById("hist-tb").innerHTML = l
+          .map((o) => {
+            return `<tr>
+            <td class="mn b">PR-${o.purchase_id}</td>
+            <td>${fmtDate(o.purchase_date)}</td>
+            <td class="b">${o.product_name || "—"}</td>
+            <td class="b">${o.supplier_name || "—"}</td>
+            <td>${o.quantity}</td>
+            <td class="b">${o.user_name || "—"}</td>
+          </tr>`;
+          })
+          .join("");
+      }
+    </script>
+  </body>
+</html>

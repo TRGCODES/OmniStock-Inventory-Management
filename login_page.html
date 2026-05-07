@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>OmniStock | Secure Access</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--bg:#060c18;--surf:#0c1525;--bdr:#1a2d46;--blue:#3b82f6;--blue2:#60a5fa;--green:#10b981;--red:#ef4444;--txt:#e8eef7;--txt2:#8ba4c0;--muted:#3d5570;}
+html{height:100%;}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--txt);min-height:100%;display:flex;align-items:stretch;}
+.bg-grid{position:fixed;inset:0;background-image:linear-gradient(rgba(59,130,246,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,.03) 1px,transparent 1px);background-size:52px 52px;pointer-events:none;}
+.orb{position:fixed;border-radius:50%;filter:blur(90px);pointer-events:none;}
+.o1{width:500px;height:500px;background:rgba(59,130,246,.07);top:-150px;left:-150px;}
+.o2{width:400px;height:400px;background:rgba(139,92,246,.05);bottom:-100px;right:-100px;}
+.page{position:relative;z-index:1;width:100%;display:flex;align-items:stretch;}
+
+/* Left panel */
+.left{flex:1;display:flex;flex-direction:column;justify-content:center;padding:48px;min-width:0;overflow:hidden;}
+.brand{display:flex;align-items:center;gap:14px;margin-bottom:36px;}
+.brand-icon{width:50px;height:50px;border-radius:14px;background:linear-gradient(135deg,var(--blue),#2563eb);display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 6px 24px rgba(59,130,246,.3);flex-shrink:0;}
+.brand-name{font-family:'Space Grotesk',sans-serif;font-size:1.5rem;font-weight:700;letter-spacing:-.3px;}
+.brand-sub{font-size:.75rem;color:var(--txt2);}
+.hero-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.5rem,3vw,2.2rem);font-weight:700;line-height:1.25;margin-bottom:14px;}
+.hero-title span{color:var(--blue2);}
+.hero-sub{font-size:.9rem;color:var(--txt2);line-height:1.7;margin-bottom:32px;max-width:380px;}
+.feat{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+.feat-ic{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+.ib{background:rgba(59,130,246,.1);}.ig{background:rgba(16,185,129,.1);}.ip{background:rgba(139,92,246,.1);}.io{background:rgba(249,115,22,.1);}
+.feat-title{font-size:.84rem;font-weight:600;color:var(--txt);}
+.feat-desc{font-size:.72rem;color:var(--muted);}
+
+/* Right panel */
+.right{width:440px;flex-shrink:0;display:flex;flex-direction:column;justify-content:center;padding:24px 28px;background:rgba(12,21,37,.7);border-left:1px solid var(--bdr);overflow-y:auto;}
+.card{background:var(--surf);border:1px solid var(--bdr);border-radius:20px;padding:34px;position:relative;overflow:hidden;width:100%;max-width:400px;margin:0 auto;}
+.card::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,rgba(59,130,246,.4),transparent);}
+.card-title{font-family:'Space Grotesk',sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:4px;}
+.card-sub{font-size:.82rem;color:var(--txt2);margin-bottom:24px;}
+.field{margin-bottom:15px;}
+.field label{display:block;font-size:.68rem;font-weight:700;color:var(--txt2);text-transform:uppercase;letter-spacing:.9px;margin-bottom:7px;}
+.iw{position:relative;}
+.iw .ic{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:14px;opacity:.4;pointer-events:none;}
+.field input{width:100%;padding:12px 13px 12px 40px;background:rgba(255,255,255,.03);border:1px solid var(--bdr);border-radius:11px;color:var(--txt);font-family:'Outfit',sans-serif;font-size:.9rem;transition:all .18s;}
+.field input::placeholder{color:var(--muted);}
+.field input:focus{outline:none;border-color:var(--blue);background:rgba(59,130,246,.05);box-shadow:0 0 0 3px rgba(59,130,246,.1);}
+.btn-sub{width:100%;padding:13px;background:linear-gradient(135deg,var(--blue),#2563eb);color:#fff;border:none;border-radius:11px;font-family:'Outfit',sans-serif;font-size:.92rem;font-weight:600;cursor:pointer;box-shadow:0 4px 16px rgba(59,130,246,.25);display:flex;align-items:center;justify-content:center;gap:8px;min-height:46px;margin-top:4px;transition:all .18s;}
+.btn-sub:hover{box-shadow:0 6px 24px rgba(59,130,246,.4);transform:translateY(-1px);}
+.btn-sub:disabled{background:var(--muted);cursor:not-allowed;box-shadow:none;transform:none;}
+.spinner{width:17px;height:17px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .65s linear infinite;display:none;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.btn-sub.loading .btn-lbl{display:none;}.btn-sub.loading .spinner{display:block;}
+.link-btn{background:none;border:none;color:var(--blue2);font-family:'Outfit',sans-serif;font-size:.82rem;font-weight:500;cursor:pointer;display:block;width:100%;text-align:center;margin-top:13px;transition:color .18s;}
+.link-btn:hover{color:#93c5fd;}
+.divider{display:flex;align-items:center;gap:10px;margin:16px 0;}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--bdr);}
+.divider span{font-size:.67rem;color:var(--muted);}
+.roles-row{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;}
+.rc{padding:3px 9px;border-radius:20px;font-size:.65rem;font-weight:600;border:1px solid;}
+.ra{background:rgba(139,92,246,.1);color:#c4b5fd;border-color:rgba(139,92,246,.2);}
+.rm{background:rgba(59,130,246,.1);color:#93c5fd;border-color:rgba(59,130,246,.2);}
+.rs{background:rgba(16,185,129,.1);color:#6ee7b7;border-color:rgba(16,185,129,.2);}
+.rp{background:rgba(249,115,22,.1);color:#fdba74;border-color:rgba(249,115,22,.2);}
+.alert{margin-top:13px;padding:10px 13px;border-radius:9px;font-size:.82rem;font-weight:500;display:none;align-items:center;gap:8px;}
+.alert.show{display:flex;}
+.alert.err{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:#fca5a5;}
+.alert.ok{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.2);color:#6ee7b7;}
+.card-foot{margin-top:18px;padding-top:14px;border-top:1px solid var(--bdr);text-align:center;font-size:.7rem;color:var(--muted);}
+.hidden{display:none!important;}
+
+@media(max-width:768px){
+  body{display:block;overflow-y:auto;}
+  .left{display:none;}
+  .right{width:100%;border-left:none;min-height:100vh;padding:32px 20px;justify-content:flex-start;padding-top:40px;}
+}
+@media(min-width:769px) and (max-width:1100px){
+  .left{padding:32px 32px;}
+  .right{width:390px;padding:20px;}
+}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="orb o1"></div><div class="orb o2"></div>
+<div class="page">
+  <div class="left">
+    <div class="brand">
+      <div class="brand-icon">📦</div>
+      <div><div class="brand-name">OmniStock</div><div class="brand-sub">Inventory Management System</div></div>
+    </div>
+    <div class="hero-title">Smarter inventory,<br><span>better decisions.</span></div>
+    <div class="hero-sub">Manage stock, track purchases, and record sales across all roles — from one unified platform.</div>
+    <div class="feat"><div class="feat-ic ib">📦</div><div><div class="feat-title">Real-Time Stock Tracking</div><div class="feat-desc">Monitor levels, alerts &amp; reorder points</div></div></div>
+    <div class="feat"><div class="feat-ic ig">📈</div><div><div class="feat-title">Sales &amp; Purchase Records</div><div class="feat-desc">Full transaction history with linked records</div></div></div>
+    <div class="feat"><div class="feat-ic ip">👥</div><div><div class="feat-title">Role-Based Access Control</div><div class="feat-desc">Admin · Manager · Sales · Purchase Officer</div></div></div>
+    <div class="feat"><div class="feat-ic io">🏭</div><div><div class="feat-title">Supplier Management</div><div class="feat-desc">Track suppliers and procurement history</div></div></div>
+  </div>
+  <div class="right">
+    <div class="card" id="loginCard">
+      <div class="card-title">Sign in to OmniStock</div>
+      <div class="card-sub">Enter your credentials to access your dashboard</div>
+      <div class="field"><label>Username</label><div class="iw"><input id="u" type="text" placeholder="Enter username" autocomplete="off"/><span class="ic">👤</span></div></div>
+      <div class="field"><label>Password</label><div class="iw"><input id="p" type="password" placeholder="Enter password" autocomplete="off"/><span class="ic">🔒</span></div></div>
+      <button class="btn-sub" id="loginBtn" onclick="doLogin()"><span class="btn-lbl">Sign In</span><div class="spinner"></div></button>
+      <button class="link-btn" onclick="show('resetCard')">Forgot password? Reset it →</button>
+      <div class="divider"><span>role-based access</span></div>
+      <div class="roles-row"><span class="rc ra">Admin</span><span class="rc rm">Manager</span><span class="rc rs">Sales Officer</span><span class="rc rp">Purchase Officer</span></div>
+      <div class="alert" id="lA"></div>
+      <div class="card-foot">© 2026 OmniStock · Secure Inventory Platform</div>
+    </div>
+    <div class="card hidden" id="resetCard">
+      <div class="card-title">Reset Password</div>
+      <div class="card-sub">Enter your secure key to set a new password</div>
+      <div class="field"><label>Username</label><div class="iw"><input id="ru" type="text" placeholder="Your username" autocomplete="off"/><span class="ic">👤</span></div></div>
+      <div class="field"><label>Secure Key</label><div class="iw"><input id="sk" type="text" placeholder="e.g. OMNI-1234" autocomplete="off"/><span class="ic">🔑</span></div></div>
+      <div class="field"><label>New Password</label><div class="iw"><input id="np" type="password" placeholder="Min. 8 characters" autocomplete="off"/><span class="ic">🛡</span></div></div>
+      <div class="field"><label>Confirm Password</label><div class="iw"><input id="cp" type="password" placeholder="Re-enter password" autocomplete="off"/><span class="ic">🛡</span></div></div>
+      <button class="btn-sub" id="resetBtn" onclick="doReset()"><span class="btn-lbl">Update Password</span><div class="spinner"></div></button>
+      <button class="link-btn" onclick="show('loginCard')">← Back to Sign In</button>
+      <div class="alert" id="rA"></div>
+      <div class="card-foot">© 2026 OmniStock · Secure Inventory Platform</div>
+    </div>
+  </div>
+</div>
+<script>
+function show(id){['loginCard','resetCard'].forEach(x=>document.getElementById(x).classList.toggle('hidden',x!==id));clr();}
+function clr(){['lA','rA'].forEach(id=>{const e=document.getElementById(id);e.classList.remove('show');e.textContent='';});}
+function msg(id,txt,type){const e=document.getElementById(id);e.innerHTML=(type==='err'?'⚠ ':'✓ ')+txt;e.className='alert show '+type;if(type==='err')setTimeout(()=>e.classList.remove('show'),5000);}
+async function doLogin(){
+  const btn=document.getElementById('loginBtn'),u=document.getElementById('u').value.trim(),p=document.getElementById('p').value;
+  clr();if(!u||!p)return msg('lA','Please enter username and password.','err');
+  btn.classList.add('loading');btn.disabled=true;
+  try{
+    const r=await fetch('http://localhost:3000/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:u,password:p})});
+    const d=await r.json();
+    if(r.ok){localStorage.setItem('omni_user',JSON.stringify(d));msg('lA',`Welcome, ${d.username}! Redirecting…`,'ok');setTimeout(()=>{const role=(d.role||'').toLowerCase();window.location.href=role.includes('admin')?'admin-dashboard.html':role.includes('manager')?'manager-dashboard.html':role.includes('sales')?'sales-staff-dashboard.html':(role.includes('purchase')||role.includes('purchae'))?'purchase-officer-dashboard.html':'admin-dashboard.html';},1200);}
+    else{msg('lA',d.message||'Invalid credentials.','err');document.getElementById('u').value='';document.getElementById('p').value='';btn.classList.remove('loading');btn.disabled=false;}
+  }catch{msg('lA','Cannot connect to server.','err');btn.classList.remove('loading');btn.disabled=false;}
+}
+async function doReset(){
+  const btn=document.getElementById('resetBtn'),u=document.getElementById('ru').value.trim(),k=document.getElementById('sk').value.trim(),np=document.getElementById('np').value,cp=document.getElementById('cp').value;
+  clr();if(!u||!k||!np||!cp)return msg('rA','All fields are required.','err');
+  if(np.length<8)return msg('rA','Password must be at least 8 characters.','err');
+  if(np!==cp)return msg('rA','Passwords do not match.','err');
+  btn.classList.add('loading');btn.disabled=true;
+  try{
+    const r=await fetch('http://localhost:3000/reset-password',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:u,secure_key:k,new_password:np})});
+    const d=await r.json();
+    if(r.ok){msg('rA','Password updated! Returning to login…','ok');setTimeout(()=>{document.getElementById('resetCard').querySelectorAll('input').forEach(x=>x.value='');btn.classList.remove('loading');btn.disabled=false;show('loginCard');},1800);}
+    else{msg('rA',d.message||'Incorrect username or secure key.','err');['ru','sk','np','cp'].forEach(id=>document.getElementById(id).value='');btn.classList.remove('loading');btn.disabled=false;}
+  }catch{msg('rA','Server error. Try again.','err');btn.classList.remove('loading');btn.disabled=false;}
+}
+document.addEventListener('keydown',e=>{if(e.key!=='Enter')return;if(!document.getElementById('loginCard').classList.contains('hidden'))doLogin();else doReset();});
+</script>
+</body>
+</html>
